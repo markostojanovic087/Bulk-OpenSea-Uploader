@@ -54,9 +54,10 @@ def main():
         text = response.text
         data = json.loads(text)
         print(data["name"])
+        metadata.append(data)
 
     try:
-      uploader.upload(data)
+      uploader.upload(metadata)
       uploader.sign_transaction()
     except Exception as e:
       print(f"Failed to upload NFT {i} '{data['name']}' for reason '{e}'.")

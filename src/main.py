@@ -8,17 +8,18 @@ def main():
     dotenv.load_dotenv()
     SEED_PHRASE = os.getenv("SEED_PHRASE")
     PASSWORD = os.getenv("PASSWORD")
+    RINKEBY_POSITION_IN_NEWTORK_LIST = 4
 
-    Initialize
+    # Initialize
     uploader = Uploader()
     uploader.connect_metamask(SEED_PHRASE, PASSWORD)
 
     # Connect to the specified network - ENTER THE APPROPRIATE NETWORK
     NETWORK_RPC = os.getenv("NETWORK_RPC")
     CHAIN_ID = os.getenv("CHAIN_ID")
-    uploader.set_network(NETWORK_RPC, CHAIN_ID) # Custom network to add to Metamask
+    uploader.set_network(NETWORK_RPC, CHAIN_ID, RINKEBY_POSITION_IN_NEWTORK_LIST) # Custom network to add to Metamask
     uploader.open_metamask()
-    uploader.set_network("", 0, 1) # Use a default network provided by Metamask
+    # uploader.set_network("", 0, 1) # Use a default network provided by Metamask
 
     # Connect to OpenSea
     uploader.connect_opensea(test=True)
@@ -47,7 +48,8 @@ def main():
 
     metadata = []
     for i, tierURI in enumerate(tierURIs):
-      for tokenID in range(1, tokensPerTier[i]):
+      # for tokenID in range(1, tokensPerTier[i]):
+      for tokenID in range(1, 3):
         url = baseURI + tierURI + str(tokenID) + ".json"
         print(url)
         response = requests.get(url)
@@ -56,11 +58,11 @@ def main():
         print(data["name"])
         metadata.append(data)
 
-    try:
-      uploader.upload(metadata)
-      uploader.sign_transaction()
-    except Exception as e:
-      print(f"Failed to upload NFT {i} '{data['name']}' for reason '{e}'.")
+    # try:
+    uploader.upload(metadata)
+    # uploader.sign_transaction()
+    # except Exception as e:
+    #   print(f"Failed to upload NFT {i} '{data['name']}' for reason '{e}'.")
 
     # Close
     uploader.close()

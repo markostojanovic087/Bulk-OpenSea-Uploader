@@ -99,6 +99,7 @@ def upload_ui(driver, metadata):
         print("Start creating NFT ", data["name"])
         COLLECTION_URL = os.getenv('COLLECTION_URL')
         IMAGE_FOLDER = os.getenv('IMAGE_FOLDER')
+        THUMBNAIL_FOLDER = os.getenv('THUMBNAIL_FOLDER')
         driver.get(COLLECTION_URL)
         # time.sleep(3)
 
@@ -119,6 +120,11 @@ def upload_ui(driver, metadata):
         extension = '.' + mediaSrc.split('.')[-1].strip()
         imagePath = IMAGE_FOLDER + str(tier) + '/' + tokenNum + extension  # change folder here
         imageUpload.send_keys(imagePath)
+        if data['animation_url'] is not None:
+            wait_css_selector('input[type="file"][name="preview"]')
+            preview_image = driver.find_element_by_css_selector('input[type="file"][name="preview"]')
+            preview_image_path = THUMBNAIL_FOLDER + 'tier-' + str(tier) + 'thumbnail-' + tokenNum + '.jpg'
+            preview_image.send_keys(preview_image_path)
 
         name = driver.find_element_by_xpath('//*[@id="name"]')
         name.send_keys(data["name"])  # +1000 for other folders #change name before "#"

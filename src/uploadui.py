@@ -97,24 +97,27 @@ def upload_ui(driver, metadata):
 
     for data in metadata:
         print("Start creating NFT ", data["name"])
-        collection_link = os.getenv('COLLECTION_URL')
-        driver.get(collection_link)
+        COLLECTION_URL = os.getenv('COLLECTION_URL')
+        IMAGE_FOLDER = os.getenv('IMAGE_FOLDER')
+        driver.get(COLLECTION_URL)
         # time.sleep(3)
 
         tier = get_tier_from_name(data["name"])
+        tokenNum = data['name'].split("#")[-1].strip()
         price = calculate_price_based_on_tier(tier)
         tier_attr = get_tier_attr_from_tier(tier)
 
         # wait_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
         # additem = driver.find_element_by_xpath('//*[@id="__next"]/div[1]/main/div/div/div[1]/span/a')
         # additem.click()
-        driver.get(collection_link + "assets/create")
+        driver.get(COLLECTION_URL + "assets/create")
         time.sleep(1)
 
         wait_xpath('//*[@id="media"]')
         imageUpload = driver.find_element_by_xpath('//*[@id="media"]')
-        mediaSrc = data["image"] if data["animation_url"] is None else data["animation_url"]
-        imagePath = os.path.abspath('./img/4-elements.jpeg')  # change folder here
+        mediaSrc = data['image'] if data['animation_url'] is None else data['animation_url']
+        extension = '.' + mediaSrc.split('.')[-1].strip()
+        imagePath = IMAGE_FOLDER + str(tier) + '/' + tokenNum + extension  # change folder here
         imageUpload.send_keys(imagePath)
 
         name = driver.find_element_by_xpath('//*[@id="name"]')

@@ -49,8 +49,7 @@ def main():
 
     metadata = []
     for i, tierURI in enumerate(tierURIs):
-      # for tokenID in range(1, tokensPerTier[i]):
-      for tokenID in range(1, 3):
+      for tokenID in range(1, tokensPerTier[i]):
         url = baseURI + tierURI + str(tokenID) + ".json"
         print(url)
         response = requests.get(url)
@@ -59,11 +58,7 @@ def main():
         print(data["name"])
         metadata.append(data)
 
-    # try:
     uploader.upload(metadata)
-    # uploader.sign_transaction()
-    # except Exception as e:
-    #   print(f"Failed to upload NFT {i} '{data['name']}' for reason '{e}'.")
 
     # Close
     uploader.close()

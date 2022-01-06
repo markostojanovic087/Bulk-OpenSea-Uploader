@@ -31,7 +31,7 @@ def main():
 
     tierURIs = [
       "QmdvLjh5ABv7soF4pVayFEfSh53aYVQNNzk8Nhv4JFmUun/",
-      # "QmVySf9khuDRujVydpMbDTMFDWyMc9NFQLzpuD1ZLygrNZ/",
+      "QmVySf9khuDRujVydpMbDTMFDWyMc9NFQLzpuD1ZLygrNZ/",
       # "Qmcd9HRe7hdH7v9Dy1EoP68Epmy3WVpK4fCBdTYL7Q4Raw/",
       # "QmWas69B2ndXW1xVr6FQ7z7xcWSEP32GUDviEM5HC4bTiE/",
       # "QmdLRVofw8STqmdkfZdLkGGsWDRg4oAL5WcUnG5Hfvn6TU/",

@@ -123,7 +123,7 @@ def upload_ui(driver, metadata):
         if data['animation_url'] is not None:
             wait_css_selector('input[type="file"][name="preview"]')
             preview_image = driver.find_element_by_css_selector('input[type="file"][name="preview"]')
-            preview_image_path = THUMBNAIL_FOLDER + 'tier-' + str(tier) + 'thumbnail-' + tokenNum + '.jpg'
+            preview_image_path = THUMBNAIL_FOLDER + 'tier-' + str(tier) + '-thumbnail-' + tokenNum + '.jpg'
             preview_image.send_keys(preview_image_path)
 
         name = driver.find_element_by_xpath('//*[@id="name"]')

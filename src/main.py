@@ -8,7 +8,8 @@ def main():
     dotenv.load_dotenv()
     SEED_PHRASE = os.getenv("SEED_PHRASE")
     PASSWORD = os.getenv("PASSWORD")
-    RINKEBY_POSITION_IN_NEWTORK_LIST = 4
+    NETWORK_LINK_POSITION = os.getenv("NETWORK_LINK_POSITION")
+    # For NETWORK_LINK_POSITION, 4 is Rinkeby, 1 is Mainnet - so value should be changed to 1 in .env on mainnet
 
     # Initialize
     uploader = Uploader()
@@ -17,7 +18,7 @@ def main():
     # Connect to the specified network - ENTER THE APPROPRIATE NETWORK
     NETWORK_RPC = os.getenv("NETWORK_RPC")
     CHAIN_ID = os.getenv("CHAIN_ID")
-    uploader.set_network(NETWORK_RPC, CHAIN_ID, RINKEBY_POSITION_IN_NEWTORK_LIST) # Custom network to add to Metamask
+    uploader.set_network(NETWORK_RPC, CHAIN_ID, NETWORK_LINK_POSITION) # Custom network to add to Metamask
     uploader.open_metamask()
     # uploader.set_network("", 0, 1) # Use a default network provided by Metamask
 

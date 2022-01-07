@@ -6,26 +6,19 @@ import requests, json
 def main():
     # Initialize env variables
     dotenv.load_dotenv()
+    
     SEED_PHRASE = os.getenv("SEED_PHRASE")
     PASSWORD = os.getenv("PASSWORD")
-    NETWORK_LINK_POSITION = os.getenv("NETWORK_LINK_POSITION")
-    if os.getenv("TIER_START").isdigit():
-        TIER_START = int(os.getenv("TIER_START"))
-    else:
-        TIER_START = 0
-    if os.getenv("TIER_STOP").isdigit():
-        TIER_STOP = int(os.getenv("TIER_STOP"))
-    else:
-        TIER_STOP = 0
-    if os.getenv("TOKEN_START").isdigit():
-        TOKEN_START = int(os.getenv("TOKEN_START"))
-    else:
-        TOKEN_START = 0
-    if os.getenv("TOKEN_STOP").isdigit():
-        TOKEN_STOP = int(os.getenv("TOKEN_STOP"))
-    else:
-        TOKEN_STOP = 0
-    # For NETWORK_LINK_POSITION, 4 is Rinkeby, 1 is Mainnet - so value should be changed to 1 in .env on mainnet
+    NETWORK_LINK_POSITION = os.getenv("NETWORK_LINK_POSITION") # 4 is Rinkeby, 1 is Mainnet
+    TIER_START = os.getenv("TIER_START")
+    TIER_STOP = os.getenv("TIER_STOP")
+    TOKEN_START = os.getenv("TOKEN_START")
+    TOKEN_STOP = os.getenv("TOKEN_STOP")
+
+    tierStart = 0 if not TIER_START.isdigit() else int(TIER_START)
+    tierStop = 0 if not TIER_STOP.isdigit() else int(TIER_STOP)
+    tokenStart = 0 if not TOKEN_START.isdigit() else int(TOKEN_START)
+    tokenStop = 0 if not TOKEN_STOP.isdigit() else int(TOKEN_STOP)
 
     baseURI = "https://zxerrorart.mypinata.cloud/ipfs/"
 
@@ -48,12 +41,12 @@ def main():
     ]
 
     metadata = []
-    tierStart = TIER_START - 1 if TIER_START > 0 else 1
-    tierStop = TIER_STOP if TIER_STOP > 0 else len(tierURIs)
+    tierStart = tierStart - 1 if tierStart > 0 else 1
+    tierStop = tierStop if 0 < tierStop <= len(tiersURIs) else len(tierURIs)
     for i in range(tierStart, tierStop):
       tierURI = tierURIs[i]
-      tokenStart = TOKEN_START - 1 if TOKEN_START > 0 else 1
-      tokenStop = TOKEN_STOP + 1 if TOKEN_STOP > 0 and TIER_STOP > 0 and i == TIER_STOP - 1 else tokensPerTier[i]
+      tokenStart = tokenStart - 1 if tokenStart > 0 else 1
+      tokenStop = tokenStop + 1 if tokenStop > 0 and tierStop > 0 and i == tierStop - 1 else tokensPerTier[i]
       for tokenID in range(tokenStart, tokenStop):
         url = baseURI + tierURI + str(tokenID) + ".json"
         print(url)
